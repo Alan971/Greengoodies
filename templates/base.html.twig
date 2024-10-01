@@ -26,8 +26,9 @@
                     </ul>
                 </div>    
             </header>   
-
         {% block body %}{% endblock %}
-        {% block footer %}{% endblock %}
+        <footer>
+            <p> @GreenGoodies - {{ 'now' | date('Y') }} </p>
+        </footer>
     </body>
 </html>
