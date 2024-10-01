@@ -26,18 +26,18 @@
             <h2>NOS PRODUITS</h2>
         </div>
         <div class="products-list">
-            {# {% for product in products %}
+            {% for product in products %}
                 <div class="product-card">
-                    <img src="{{ product.image }}" alt="{{ product.name }}">
+                    <img src="{{ product.picture }}" alt="{{ product.name }}">
                     <div class="product-infos">
                         <h3>{{ product.name }}</h3>
-                        <p>{{ product.description }}</p>
+                        <p>{{ product.shortDescription }}</p>
                         <p>{{ product.price }}</p>
                         <a href="{{ path('app_product_show', {'id': product.id}) }}">Voir le produit</a>
                     </div>
                 </div>
-            {% endfor %} #}
-            <div class="product-card">
+            {% endfor %} 
+            {# <div class="product-card">
                 <img src="{{ asset('img//products/product1.png') }}" alt="product1">
                 <div class="product-infos">
                     <h3>Produit 1</h3>
@@ -63,7 +63,7 @@
                     <p>700 Francs</p>
                     <a href="">Voir le produit</a>
                 </div>
-            </div>
+            </div> #}
         </div>
         <div class="bottom-panel">
             <div class="left-bottom-panel-infos">

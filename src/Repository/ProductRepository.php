@@ -16,6 +16,16 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+    public function findByEnable(bool $enable): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.enable = :val')
+            ->setParameter('val', $enable)
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     //    /**
     //     * @return Product[] Returns an array of Product objects
     //     */
