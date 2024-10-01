@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Green Goodies : Nos produits{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="welcome-message">
+            <div class="left-panel">
+                <h1>Bienvenue</h1>
+                <p>
+                    Découvrez notre univers de produits 
+                    durables et éthiques pour une 
+                    consommation responsable 
+                </p>
+                <p>
+                    Retrouvez des articles d’hygiène & beauté, 
+                    des accessoires & boissons et du prêt 
+                    à porter
+                </p>
+            </div>
+            <div class="right-panel">
+                <img src="{{ asset('img/LessCO2.png') }}" alt="home">
+            </div>
+        </div>
+        <div class="products-panel">
+            <h2>NOS PRODUITS</h2>
+        </div>
+        <div class="products-list">
+            {# {% for product in products %}
+                <div class="product-card">
+                    <img src="{{ product.image }}" alt="{{ product.name }}">
+                    <div class="product-infos">
+                        <h3>{{ product.name }}</h3>
+                        <p>{{ product.description }}</p>
+                        <p>{{ product.price }}</p>
+                        <a href="{{ path('app_product_show', {'id': product.id}) }}">Voir le produit</a>
+                    </div>
+                </div>
+            {% endfor %} #}
+            <div class="product-card">
+                <img src="{{ asset('img//products/product1.png') }}" alt="product1">
+                <div class="product-infos">
+                    <h3>Produit 1</h3>
+                    <p>Courte description</p>
+                    <p>500 Francs</p>
+                    <a href="">Voir le produit</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="{{ asset('img//products/product2.png') }}" alt="product1">
+                <div class="product-infos">
+                    <h3>Produit 2</h3>
+                    <p>Courte description</p>
+                    <p>600 Francs</p>
+                    <a href="">Voir le produit</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="{{ asset('img//products/product3.png') }}" alt="product1">
+                <div class="product-infos">
+                    <h3>Produit 3</h3>
+                    <p>Courte description</p>
+                    <p>700 Francs</p>
+                    <a href="">Voir le produit</a>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-panel">
+            <div class="left-bottom-panel-infos">
+                <h3>NOTRE CONVICTION</h3>
+                <p>
+                    Chez GreenGoodies, nous croyons en un monde où le commerce 
+                    peut être synonyme de bien-être pour la planète et ses 
+                    habitants. Notre mission est de vous proposer une sélection 
+                    rigoureuse de produits qui allient qualité, durabilité et éthique
+                </p>
+            </div>
+            <div class="right-panel-img">
+                <img src="{{ asset('img/treebranch.png') }}" alt="logo">
+            </div>
+            <div class="left-panel-img">
+                <img src="{{ asset('img/wastebag.png') }}" alt="logo">
+            </div>
+            <div class="right-bottom-panel-infos">
+                <h3>NOS VALEURS</h3>
+                <p>
+                Durabilité : Nous sélectionnons soigneusement des produits qui 
+                respectent l'environnement et favorisent la durabilité. 
+                Éthique : Nous nous engageons à travailler avec des partenaires et des 
+                fournisseurs qui partagent nos valeurs éthiques. 
+                Écologie : Nous encourageons des pratiques respectueuses de 
+                l'écosystème et privilégions les matériaux écologiques.
+                </p>
+            </div>
+        </div>
+
+
+
+    </div>
+{% endblock %}

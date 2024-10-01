@@ -1,3 +1,202 @@
-body {
+html body{
+    font-family: Inter, Helvetica, sans-serif;
     background-color: skyblue;
+    margin: 0;
+    padding: 0;
 }
+/* entête */
+header {
+    background-color: #FFFDF7;
+    width: 100%;
+    height: 81px;
+    display: flex;
+}
+.row1 {
+    margin: 0;
+    padding-left: 100px;
+    padding-top: 30px;
+    width: 50%;
+}
+.row2 {
+    margin: 0;
+    padding-left: 100px;
+    padding-top: 15px;
+    color: rgb(100, 88, 88);
+    width: 50%;
+}
+
+ul.menu {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    font-size: 14px;
+}
+ul.menu li a{
+    padding: 1rem;
+}
+.menu a {
+    text-decoration: none;
+    color: rgb(100, 88, 88);
+}
+/* page d'accueil */
+
+/* panneau de bienvenue */
+.welcome-message {
+    background-color: #E8F0E3;
+    width: 100%;
+    height: 751px;
+    display: flex;
+}
+.left-panel {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.right-panel {
+    width: 50%;
+    height: 100%;
+}
+.left-panel h1 {
+    width: 55%;
+    font-size: 64px;
+    font-weight: 500;
+    line-height: 77.45px;
+    text-align: left;
+    color: #333333
+}
+.left-panel p {
+    width:55%;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 21.78px;
+    text-align: left;
+    color: #333333
+}
+
+/* panneau des produits */
+.products-panel {
+    background-color: #FFFDF7;
+    width: 100%;
+    height: 81px;
+    display: flex;
+}
+.products-panel h2 {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16.94px;
+    text-align: left;
+    padding-left: 100px;
+    padding-top: 20px;
+}
+.products-list {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+.product-card {
+    width: 33.33%;
+    height: 592px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFDF7;
+    padding-bottom: 20px;
+}
+.product-card img {
+    width: 100%;
+    height: auto;
+}
+.product-infos {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.product-infos h3 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19.36px;
+    text-align: center;
+    color: #000000;
+    margin-bottom: -10px;
+}
+.product-infos p{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.94px;
+    text-align: center;
+    color: #666666;
+    text-decoration: none;
+    margin-bottom: 0px;
+}
+.product-infos a{
+    color :#000000;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16.94px;
+    text-align: center;
+    margin-top: 40px;
+}
+/* panneau de bas de page */
+.bottom-panel {
+    background-color: #FFFDF7;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.left-bottom-panel-infos {
+    width: 66.66%;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-end;
+    align-items: left;
+    background-color: #EBE3D3;
+    margin-top: -5px;
+}
+.left-bottom-panel-infos h3, .right-bottom-panel-infos h3 {
+    width: 49%;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24.2px;
+    text-align: left;   
+    color: #333333;
+    padding-left: 30px;
+    margin-bottom: -5px;
+}
+.left-bottom-panel-infos p, .right-bottom-panel-infos p {
+    width: 45%;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 16.94px;
+    text-align: left;
+    color: #333333;
+    padding:30px;
+}
+.right-panel-img, .left-panel-img{
+    width: 33.33%;
+    height: auto;
+    margin-top: -5px;
+}
+.right-panel-img img, .left-panel-img img{
+    width: 100%;
+    object-fit: contain;
+}
+.right-bottom-panel-infos {
+    width: 66.66%;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-end;
+    align-items:end;
+    background-color: #E8F0E3;
+    margin-top: -5px;
+}
+
+/*  */
