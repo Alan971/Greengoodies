@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
@@ -12,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -20,7 +22,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private ?Uuid $id = null;
 
-    #[ORM\Column(length: 180)]
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank(message: 'Merci de renseigner votre email.')]
+    #[Assert\Email(message: 'Merci de renseigner une adresse email valide.')]
     private ?string $email = null;
 
     /**
@@ -35,10 +39,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     #[Assert\NotBlank]
     #[Assert\NotCompromisedPassword]
-    #[Assert\PasswordStrength(minLength: 8, maxLength: 255, userMessage: 'Your password must be between 8 and 255 characters long.')]
     #[Assert\PasswordStrength([
         'minScore' => Assert\PasswordStrength::STRENGTH_MEDIUM,
-        'userMessage' => 'Votre mot de passe doit être plus fort.',
+        'message' => 'Votre mot de passe doit être plus fort.',
     ])]
     private ?string $password = null;
 

@@ -275,9 +275,8 @@ footer p {
     text-align: left;
     color: #666666;
 }
-.product-details a{
+.product-details a, .btn{
     width: 80%;
-
     background-color:#565656 ;
     color :#FFFFFF;
     text-decoration: none;
@@ -288,4 +287,79 @@ footer p {
     padding-top: 30px;
     padding-bottom: 30px;
     margin-top: 40px;
+}
+/* Page d'enregistrement */
+.auth-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFDF7;
+}
+.auth-container img {
+    width: 50%;
+    height: auto;
+}
+   
+.auth-form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    padding-top: 20px;
+    padding-left: 100px;
+}
+.auth-form h1 {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24.2px;
+    text-align: left;
+    color: #333333;
+}
+.auth-form p {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.52px;
+    text-align: left;
+    color: #666666;
+}
+.auth-form a {  
+    width: 80%;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.94px;
+    text-align: center;
+    color: #666666;
+    margin-top: 30px;
+} 
+.auth-form label {
+    width: 80%;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.94px;
+    text-align: left;
+    color: #666666;
+    display: inline-block;
+}
+.field {
+    width: 80%;
+    height: 50px;
+    display: block;
+    background-color: #FFFDF7;
+    border:#666666 solid 1px;
+    margin-bottom: 30px;
+}
+.agree-field {
+    width: 80%;
+    height: 30px;
+    display: flex;
+}
+.agree-field label {
+    padding-top: 5px;
+    padding-left: 5px;
+}
+.agree-field input {
+    width: 19px;
+    height: 19px;
 }
