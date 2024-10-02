@@ -19,11 +19,14 @@ class HomeController extends AbstractController
     }
 
     #[Route('/product/{id}', name: 'app_product_show')]
-    public function show(Product $product): Response
+    public function show(?int $id, ProductRepository $productRepository): Response
     {
+        $product = $productRepository->find($id);
+        if (!$product) {
+            throw $this->createNotFoundException('No product found for id ' . $id);
+        }
         return $this->render('product/show.html.twig', [
             'product' => $product,
         ]);
     }
-
 }

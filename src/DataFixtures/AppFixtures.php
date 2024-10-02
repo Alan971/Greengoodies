@@ -59,7 +59,7 @@ class AppFixtures extends Fixture
             $product->setPrice(100.2 * $i);
             $product->setStock(2*$i);
             $product->setEnable(true);
-            $product->setPicture('img/products/product' . $i . '.png');
+            $product->setPicture('/img/products/product' . $i . '.png');
             $manager->persist($product);
         }
         $manager->flush();
