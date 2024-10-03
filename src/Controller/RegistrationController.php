@@ -21,16 +21,18 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var string $plainPassword */
+            // partie user
             $plainPassword = $form->get('password')->getData();
-
-            // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+            $user->setRoles(['ROLE_USER']);
+            $user->setApiAccess(false);
+            // partie infoUser
+            $infoUser = $user->getInfoUser();
+            $infoUser->setEntryDate(new \DateTime());
+            $user->setInfoUser($infoUser);
 
             $entityManager->persist($user);
             $entityManager->flush();
-
-            // do anything else you need here, like send an email
 
             return $this->redirectToRoute('app_home');
         }

@@ -38,7 +38,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Assert\NotBlank]
-    #[Assert\NotCompromisedPassword]
+    #[Assert\NotCompromisedPassword(
+        message: 'Votre mot de passe a déjà été compromis. Veuillez en choisir un autre.'
+    )]
     #[Assert\PasswordStrength([
         'minScore' => Assert\PasswordStrength::STRENGTH_MEDIUM,
         'message' => 'Votre mot de passe doit être plus fort.',
