@@ -110,11 +110,10 @@ footer p {
 .products-list {
     display: flex;
     flex-wrap: wrap;
-
 }
 .product-card {
     width: 33.33%;
-    height: 592px;
+    min-height: 592px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -293,7 +292,7 @@ footer p {
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     background-color: #FFFDF7;
 }
 .auth-container img {
@@ -307,7 +306,7 @@ footer p {
     flex-direction: column;
     justify-content: center;
     align-items: left;
-    padding-top: 20px;
+    padding-top: 100px;
     padding-left: 100px;
 }
 .auth-form h1 {
