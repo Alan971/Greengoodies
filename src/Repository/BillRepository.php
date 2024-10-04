@@ -16,6 +16,20 @@ class BillRepository extends ServiceEntityRepository
         parent::__construct($registry, Bill::class);
     }
 
+        /**
+        * @return Bill[] Returns an array of Bill objects
+        */
+       public function findByBasket($value): array
+       {
+           return $this->createQueryBuilder('b')
+               ->andWhere('b.basket = :val')
+               ->setParameter('val', $value)
+               ->orderBy('b.id', 'ASC')
+               ->getQuery()
+               ->getResult()
+           ;
+       }
+
     //    /**
     //     * @return Bill[] Returns an array of Bill objects
     //     */

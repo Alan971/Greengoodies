@@ -8,6 +8,7 @@ use App\Entity\InfoUser;
 use App\Repository\UserRepository;
 use App\Repository\BillRepository;
 use App\Repository\BasketRepository;
+use App\Repository\InfoUserRepository;
 use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,17 +22,19 @@ use Symfony\Polyfill\Intl\Idn\Info;
 class MyAccountController extends AbstractController
 {
     #[Route('/myaccount', name: 'app_my_account')]
-    public function index(BillRepository $billRepository, BasketRepository $basketRepository, UserRepository $userRepository, InfoUserRepository $infoUserRepository): Response
+    public function index(BillRepository $billRepository, BasketRepository $basketRepository, 
+                            UserRepository $userRepository, InfoUserRepository $infoUserRepository): Response
     {
         if ($this->getUser()) {
-
-            $basket = $this->getUser()->findBasket();
+            $infoUser = $this->getUser()->getInfoUser();
+            $baskets = $basketRepository->findByUser($infoUser->getId());
             $orders = [];
-            $orders = $billRepository->findByUser($this->getUser());
+            $orders = $billRepository->findByBasket($baskets);
 
             return $this->render('my_account/index.html.twig', [
                 'apiAccess' => $this->getUser()->isApiAccess(),
                 'orders' => $orders,
+                'baskets' => $baskets,
             ]);
         }
         return $this->redirectToRoute('app_login');

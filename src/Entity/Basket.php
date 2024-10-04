@@ -29,6 +29,9 @@ class Basket
     #[ORM\OneToMany(targetEntity: BasketProduct::class, mappedBy: 'basket')]
     private Collection $basketProducts;
 
+    #[ORM\ManyToOne(inversedBy: 'baskets')]
+    private ?InfoUser $InfoUser = null;
+
     public function __construct()
     {
         $this->basketProducts = new ArrayCollection();
@@ -99,6 +102,18 @@ class Basket
                 $basketProduct->setBasket(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getInfoUser(): ?InfoUser
+    {
+        return $this->InfoUser;
+    }
+
+    public function setInfoUser(?InfoUser $InfoUser): static
+    {
+        $this->InfoUser = $InfoUser;
 
         return $this;
     }

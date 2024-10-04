@@ -23,6 +23,9 @@ class Bill
     #[ORM\OneToOne(inversedBy: 'bill', cascade: ['persist', 'remove'])]
     private ?Basket $basket = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?float $price = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class Bill
     public function setBasket(?Basket $basket): static
     {
         $this->basket = $basket;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?float $price): static
+    {
+        $this->price = $price;
 
         return $this;
     }

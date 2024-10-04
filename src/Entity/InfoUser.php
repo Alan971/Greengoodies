@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\InfoUserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,6 +27,17 @@ class InfoUser
 
     #[ORM\OneToOne(inversedBy: 'infoUser', cascade: ['persist', 'remove'])]
     private ?User $user = null;
+
+    /**
+     * @var Collection<int, Basket>
+     */
+    #[ORM\OneToMany(targetEntity: Basket::class, mappedBy: 'InfoUser')]
+    private Collection $baskets;
+
+    public function __construct()
+    {
+        $this->baskets = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +88,36 @@ class InfoUser
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Basket>
+     */
+    public function getBaskets(): Collection
+    {
+        return $this->baskets;
+    }
+
+    public function addBasket(Basket $basket): static
+    {
+        if (!$this->baskets->contains($basket)) {
+            $this->baskets->add($basket);
+            $basket->setInfoUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBasket(Basket $basket): static
+    {
+        if ($this->baskets->removeElement($basket)) {
+            // set the owning side to null (unless already changed)
+            if ($basket->getInfoUser() === $this) {
+                $basket->setInfoUser(null);
+            }
+        }
 
         return $this;
     }

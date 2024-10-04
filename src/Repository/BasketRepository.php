@@ -16,6 +16,21 @@ class BasketRepository extends ServiceEntityRepository
         parent::__construct($registry, Basket::class);
     }
 
+    
+       /**
+        * @return Basket[] Returns an array of Basket objects
+        */
+       public function findByUser($id): array
+       {
+           return $this->createQueryBuilder('b')
+               ->andWhere('b.InfoUser = :val')
+               ->setParameter('val', $id)
+               ->orderBy('b.id', 'ASC')
+               ->setMaxResults(10)
+               ->getQuery()
+               ->getResult()
+           ;
+       }
     //    /**
     //     * @return Basket[] Returns an array of Basket objects
     //     */
