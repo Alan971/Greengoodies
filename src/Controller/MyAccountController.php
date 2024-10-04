@@ -2,16 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Basket;
-use App\Entity\Bill;
-use App\Entity\User;
-use App\Entity\InfoUser;
 use App\Handler\BillAccess;
 use App\Repository\UserRepository;
-use App\Repository\BillRepository;
-use App\Repository\BasketRepository;
-use App\Repository\InfoUserRepository;
-use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,16 +12,25 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
-use Ramsey\Uuid\Uuid;
 
 class MyAccountController extends AbstractController
 {
     #[Route('/myaccount', name: 'app_my_account')]
-    public function index(BillAccess $billAccess ): Response
+    public function index(BillAccess $billAccess,TagAwareCacheInterface $cachePool ): Response
     {
         if ($this->getUser()) {
-            $orders = [];
-            $orders = $billAccess->getBills($this->getUser());
+            // récupération des commandes de l'utilisateur si elle n'est pas dans le cache
+            $stringId = $this->getUser()->getId()->__toString();
+            $idCache = "user_" . $stringId;
+            $orders = $cachePool->get($idCache, function(ItemInterface $item) use ($billAccess)
+            {
+                $item->tag('useraccount');
+                $orders = [];
+                $orders = $billAccess->getBills($this->getUser());
+                $item->expiresAfter(1800); //le cache dure 1/2 heure.
+                return $orders;
+            }
+            );
 
             return $this->render('my_account/index.html.twig', [
                 'apiAccess' => $this->getUser()->isApiAccess(),
@@ -42,7 +43,8 @@ class MyAccountController extends AbstractController
 
     #[Route('/myaccount/api', name: 'app_my_account_api')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function api(EntityManagerInterface $entityManager, BillAccess $billAccess, TagAwareCacheInterface $cachePool): Response
+    public function api(EntityManagerInterface $entityManager, BillAccess $billAccess, 
+                        TagAwareCacheInterface $cachePool): Response
     {
         // modification de l'état de l'api utilisateur
         $user = $this->getUser();
@@ -56,14 +58,13 @@ class MyAccountController extends AbstractController
 
         // récupération des commandes de l'utilisateur si elle n'est pas dans le cache
         $stringId = $this->getUser()->getId()->__toString();
-        dump($stringId);
         $idCache = "user_" . $stringId;
         $orders = $cachePool->get($idCache, function(ItemInterface $item) use ($billAccess)
         {
             $item->tag('useraccount');
             $orders = [];
             $orders = $billAccess->getBills($this->getUser());
-            $item->expiresAfter(3600); //le cache dure 1 heure. il expire au bout du même tempe que le JWT
+            $item->expiresAfter(1800); //le cache dure 1/2 heure.
             return $orders;
         }
         );
