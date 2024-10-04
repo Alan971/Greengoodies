@@ -55,7 +55,13 @@ footer p {
     padding-right: 100px;
 }
 /* page d'accueil */
-
+/* message flash */
+.flash-notice {
+    background-color: #FFFDF7;
+    width: 100%;
+    height: auto;
+    color :red
+}
 /* panneau de bienvenue */
 .welcome-message {
     background-color: #E8F0E3;
@@ -274,7 +280,7 @@ footer p {
     text-align: left;
     color: #666666;
 }
-.product-details a, .btn{
+.product-details a, .btn, .my-account a {
     width: 80%;
     background-color:#565656 ;
     color :#FFFFFF;
@@ -285,9 +291,11 @@ footer p {
     text-align: center;
     padding-top: 30px;
     padding-bottom: 30px;
+}
+.product-details a, .btn {
     margin-top: 40px;
 }
-/* Page d'enregistrement */
+/* Page d'enregistrement etde connection */
 .auth-container {
     width: 100%;
     display: flex;
@@ -362,4 +370,62 @@ footer p {
 .agree-field input {
     width: 19px;
     height: 19px;
+}
+/* Page mon compte */
+.container-my-account {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #F7F1EC;
+    padding: 20px;
+}
+.container-my-account h1 {
+    width: 30%;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24.2px;
+    color: #333333;
+    text-align: center;
+}
+.my-account {
+    width: 30%;
+    height: auto;
+    padding: 20px;
+    background-color: #FFFDF7;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+.my-account h2 {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 16.94px;
+    text-align: left;
+    color: #000000;
+}
+.my-account a {
+    margin-top: 10px;
+    margin-left: 40px;
+    margin-bottom: 20px;
+}
+/* tableau des commandes */
+.orders-table{
+    width: 100%;
+    border-collapse: collapse;
+}
+.orders-table thead tr {
+    color :#666666;
+    text-align: left;
+}
+.orders-table tr{
+    text-align: left;
+    border-bottom: #CCCCCC solid 1px;
+}
+.orders-table tr:last-child {
+    border-bottom: none;
+}
+.orders-table tr:hover {
+    background-color: #CCCCCC;
 }

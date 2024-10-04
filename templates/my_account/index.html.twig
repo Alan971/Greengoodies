@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+
+<div class="container-my-account">
+    <h1>Mon compte</h1>
+    <div class="previous-orders my-account">
+        <h2>Mes précédentes commandes</h2>
+        <div class="previousOrders-list">
+            {% if orders is empty %}
+                <p>Vous n'avez pas encore de commandes</p>
+            {% endif %}
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Date</th>
+                        <th>Prix</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.date|date('d/m/YYYY') }}</td>
+                        <td>{{ order.price }} €</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="api-access my-account">
+        <h2>Mon accès API</h2>
+        {% if apiAccess %}
+            <a href="{{ path('app_my_account_api') }}">Désactiver mon accès API</a>
+        {% else %}
+            <a href="{{ path('app_my_account_api') }}">Activer mon accès API</a>
+        {% endif %}
+    </div>
+    <div class="delete-account my-account">
+        <a href="{{ path('app_my_account_delete') }}">Supprimer mon compte</a>
+    </div>
+</div>
+
+{% endblock %}
