@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon panier{% endblock %}
+
+{% block body %}
+<div class="container-basket">
+    <h1>Mon panier</h1>
+    <div class = "basket">
+    {% if basketProducts is empty %}
+        <p class="empty-basket">Votre panier est vide</p>
+    {% else %}
+        <a class="delete-basket" href="{{ path('app_basket_delete') }}">Vider le panier</a>
+        {%for basketProduct in basketProducts%}
+            <div class="basket-product-card">
+                <img src="{{ basketProduct.product.picture }}" alt="{{ basketProduct.product.name }}">
+                <div class="basket-infos">
+                    <h3>{{ basketProduct.product.name }}</h3>
+                    <p class="quantity">Quantité : {{ basketProduct.quantity }}</p>
+                    <p class="price">{{ basketProduct.product.price|format_currency('EUR', {fraction_digit:2},  locale='fr') }} </p>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="basket-total">
+            <p class="total">Total panier : <span>{{ prixTotal|format_currency('EUR', {fraction_digit:2},  locale='fr') }} </span></p>
+            <p class="livraison">Frais de livraison : Offerts</p>
+        </div>
+        <a class="btn" href="{{ path('app_basket_valid') }}">Valider la commande</a>
+    {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -4,21 +4,25 @@ namespace App\Repository;
 
 use App\Entity\Basket;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+
 
 /**
  * @extends ServiceEntityRepository<Basket>
  */
 class BasketRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $em;
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $em)
     {
         parent::__construct($registry, Basket::class);
+        $this->em = $em;
     }
 
     
        /**
-        * @return Basket[] Returns an array of Basket objects
+        * @return Basket[] Returns a Basket object
         */
        public function findByUser($id): array
        {
@@ -30,6 +34,21 @@ class BasketRepository extends ServiceEntityRepository
                ->getQuery()
                ->getResult()
            ;
+       }
+
+       public function removeBasket($id): void
+       {
+           $baskets = $this->findByUser($id);
+           dump ($baskets);
+           foreach ($baskets as $basket) {
+               if (!$basket->getBill()) {
+                   foreach($basket->getBasketProducts() as $basketProduct) {
+                       $this->em->remove($basketProduct);
+                   }
+                   $this->em->remove($basket);
+               }
+           } 
+           $this->em->flush();
        }
     //    /**
     //     * @return Basket[] Returns an array of Basket objects

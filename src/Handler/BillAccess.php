@@ -6,7 +6,6 @@ use App\Entity\Bill;
 use App\Entity\User;
 use App\Entity\Basket;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Entity;
 
 class BillAccess
 {
@@ -16,6 +15,13 @@ class BillAccess
         $this->em = $em;
     }
 
+
+    /**
+     * get all bills of a user
+     *
+     * @param User $currentUser
+     * @return array
+     */
     public function getBills(User $currentUser): array
     {
         $infoUser = $currentUser->getInfoUser();
@@ -23,5 +29,22 @@ class BillAccess
         $bills = $this->em->getRepository(Bill::class)->findByBasket($baskets);
 
         return $bills;
+    }
+
+
+    /**
+     * delete all bills of a user in case user wants to delete his account
+     *
+     * @param User $currentUser
+     * @return void
+     */
+    public function deleteBills(User $currentUser): void
+    {
+
+        $bills = $this->getBills($currentUser);
+        foreach ($bills as $bill) {
+            $this->em->remove($bill);
+        }
+        $this->em->flush();
     }
 }

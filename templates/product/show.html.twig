@@ -7,10 +7,10 @@
         <img src="{{ product.picture }}" alt="{{ product.picture }}">
         <div class="product-details">
             <h3>{{ product.name }}</h3>
-            <p class="price">{{ product.price }} €</p>
+            <p class="price">{{ product.price|format_currency('EUR', {fraction_digit:2},  locale='fr') }}</p>
             <p class="content-title">Description</p>
             <p class="content">{{ product.longDescription }}</p>
-            <a href="{{ path('app_home', {'id': product.id}) }}">Ajouter au panier</a>
+            <a href="{{ path('app_add_to_basket', {'productId': product.id}) }}">Ajouter au panier</a>
         </div>
     </div>
 {% endblock %}

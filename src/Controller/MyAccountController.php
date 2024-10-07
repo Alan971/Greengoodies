@@ -77,11 +77,15 @@ class MyAccountController extends AbstractController
 
     #[Route('/myaccount/delete', name: 'app_my_account_delete')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function delete(UserRepository $userRepository, Request $request): Response
+    public function delete(UserRepository $userRepository, Request $request, BillAccess $billAccess): Response
     {
         //suppresion de l'utilisateur en bdd
         $user = $this->getUser();
         $userRepository->deleteUser($user);
+        // suppression des commandes de l'utilisateur
+        // TO DO controler le bon fonctionnement de la suppression des commandes
+        $billAccess->deleteBills($user);
+        //TO DO suppression des baskets de l'utilisateur
         
         //suppression de la session, obligatoire avant de rediriger vers une page 
         $request->getSession()->invalidate(false);

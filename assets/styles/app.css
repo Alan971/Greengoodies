@@ -372,7 +372,7 @@ footer p {
     height: 19px;
 }
 /* Page mon compte */
-.container-my-account {
+.container-my-account, .container-basket{
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -381,7 +381,7 @@ footer p {
     background-color: #F7F1EC;
     padding: 20px;
 }
-.container-my-account h1 {
+.container-my-account h1, .container-basket h1 {
     width: 30%;
     font-size: 20px;
     font-weight: 500;
@@ -433,4 +433,118 @@ footer p {
     font-size: 12px;
     font-weight: 400;
     font-style: italic;
+}
+
+/* Basket page */
+.basket a {
+    width: 100%;
+    text-decoration: none;
+    color :#666666;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16.94px;
+    text-align: left;
+}
+.basket{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: center;
+    padding-left: 0;
+    margin-bottom: 100px;
+}
+.empty-basket {
+    color :#666666;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16.94px;
+    text-align: center;
+    height: 300px;
+}
+.basket-product-card, .basket-total {
+    width: 100%;
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: #FFFDF7 ;
+}
+.basket-product-card {
+    flex-direction: row;
+}
+.basket-product-card img {
+    width: 30%;
+    height: auto;
+    object-fit: contain;
+    margin: 30px;
+}
+.basket-infos {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    padding-left: 20px;
+}
+.basket-infos h3 {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 16.94px;
+    text-align: left;
+    margin : 0;
+}
+.basket-infos .quantity {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.94px;
+    text-align: left;    
+    color: #666666;
+    margin:0;
+
+}
+.basket-infos .price {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 21.78px;
+    text-align: left;
+    margin : 0;
+    margin-top: 10px;
+}    
+.basket-total {
+    flex-direction: column;
+}
+.basket-total p {
+    width :90%;
+    text-align: end;
+}
+.livraison {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.52px;
+    text-align: left;
+    color :#666666;
+    margin:0;
+}
+.total {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16.94px;
+    text-align: left;
+    color :#333333;
+    margin-bottom: 3px;
+    background-color: #red;
+}
+.total span {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 16.94px;
+    text-align: left;
+    color :#333333;
+}
+.container-basket .btn {
+    width: 80%;
+    color :#FFFFFF;
+    text-align: center;
+    align-items: center;
 }

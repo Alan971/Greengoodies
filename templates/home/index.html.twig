@@ -9,6 +9,7 @@
             {{ message }}
         </div>
     {% endfor %}
+    
     <div class="container">
         <div class="welcome-message">
             <div class="left-panel">
@@ -38,7 +39,7 @@
                     <div class="product-infos">
                         <h3>{{ product.name }}</h3>
                         <p>{{ product.shortDescription }}</p>
-                        <p>{{ product.price }} €</p>
+                        <p>{{ product.price|format_currency('EUR', {fraction_digit:2},  locale='fr') }} </p>
                         <a href="{{ path('app_product_show', {'id': product.id}) }}">Voir le produit</a>
                     </div>
                 </div>
