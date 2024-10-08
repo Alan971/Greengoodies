@@ -21,11 +21,13 @@
                     </thead>
                     <tbody>
                     {% for order in orders %}
+                        {% if order is not empty %}
                         <tr>
                             <td>{{ order[0].uniqueNumber }}</td>
                             <td>{{ order[0].date|date('d/m/Y') }}</td>
                             <td>{{ order[0].price | format_currency('EUR', {fraction_digit:2},  locale='fr')}}</td>
                         </tr>
+                        {% endif %}
                     {% endfor %}
                     </tbody>
                 </table>

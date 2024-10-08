@@ -25,7 +25,6 @@ class MyAccountController extends AbstractController
             $orders = $cachePool->get($idCache, function(ItemInterface $item) use ($billAccess)
             {
                 $item->tag('useraccount');
-                $orders = [];
                 $orders = $billAccess->getBills($this->getUser());
                 $item->expiresAfter(60); //le cache dure 1 minute.
                 return $orders;

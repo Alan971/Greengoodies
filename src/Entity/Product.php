@@ -7,6 +7,7 @@ use App\Entity\BasketProduct;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -14,22 +15,33 @@ class Product
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('products')]
     private ?int $id = null;
 
+    #[Groups('products')]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[Groups('products')]
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $picture = null;
+    private ?string $shortDescription = null;
+    
+    #[ORM\Column(length: 4096, nullable: true)]
+    private ?string $longDescription = null;
 
+    //petite astuce pour récupérer le nom exact du champ demandé 
+    //suite à erreur de nommage à la création de l'entité
+    //ne sert que pour l'API
+    #[Groups('products')]
+    private ?string $fullDescription = null;
+
+    #[Groups('products')]
     #[ORM\Column(nullable: true)]
     private ?float $price = null;
 
+    #[Groups('products')]
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $shortDescription = null;
-
-    #[ORM\Column(length: 4096, nullable: true)]
-    private ?string $longDescription = null;
+    private ?string $picture = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $stock = null;
@@ -112,6 +124,12 @@ class Product
 
         return $this;
     }
+
+    public function getFullDescription(): ?string
+    {
+        return $this->longDescription;
+    }
+
 
     public function getStock(): ?int
     {

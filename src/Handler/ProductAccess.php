@@ -6,18 +6,14 @@ use App\Entity\Product;
 use App\Entity\User;
 use App\Entity\Basket;
 use App\Entity\BasketProduct;
-use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpParser\Node\Expr\New_;
 
 class ProductAccess
 {
-    private $productRepository;
     private $em;
 
-    public function __construct(ProductRepository $productRepository, EntityManagerInterface $em)
+    public function __construct( EntityManagerInterface $em)
     {
-        $this->productRepository = $productRepository;
         $this->em = $em;
     }
 

@@ -20,7 +20,7 @@
         {% if basketProducts is empty %}
             <p class="empty-basket">Votre panier est vide</p>
         {% else %}
-            <a class="delete-basket" href="{{ path('app_basket_delete') }}">Vider le panier</a>
+            <a class="delete-basket" href="{{ path('app_basket_delete') }}">x Vider le panier</a>
             {%for basketProduct in basketProducts%}
                 <div class="basket-product-card">
                     <img src="{{ basketProduct.product.picture }}" alt="{{ basketProduct.product.name }}">

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Bill;
 use App\Handler\BillAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,7 +9,6 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Handler\ProductAccess;
 use App\Repository\BasketRepository;
 use App\Repository\ProductRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class BasketController extends AbstractController
@@ -44,6 +42,12 @@ class BasketController extends AbstractController
         ]);
     }
 
+    /**
+     * Delete Basket
+     *
+     * @param BasketRepository $basketRepository
+     * @return Response
+     */
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[Route('/basket/delete', name: 'app_basket_delete')]
     public function deleteBasket(BasketRepository $basketRepository ): Response
@@ -93,9 +97,16 @@ class BasketController extends AbstractController
         ]);
     }
 
+    /**
+     * Bill validation
+     *
+     * @param ProductAccess $productAccess
+     * @param BillAccess $billAccess
+     * @return Response
+     */
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[Route('/basket/bill', name: 'app_basket_valid')]
-    public function validBill( EntityManagerInterface $em, ProductAccess $productAccess, BillAccess $billAccess): Response
+    public function validBill( ProductAccess $productAccess, BillAccess $billAccess): Response
     {
         $basket = $productAccess->findBasket($this->getUser());
         if(!isset($basket)){
