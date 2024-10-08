@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Bill;
+use App\Handler\BillAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Handler\ProductAccess;
 use App\Repository\BasketRepository;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class BasketController extends AbstractController
@@ -26,7 +29,7 @@ class BasketController extends AbstractController
     {
         if ($productAccess->AddProductToCart($this->getUser(), $productId)){
             $this->addFlash(
-                'danger',
+                'ok',
                 "Le produit a bien été ajouté au panier"
             );
         } else {
@@ -92,9 +95,31 @@ class BasketController extends AbstractController
 
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[Route('/basket/bill', name: 'app_basket_valid')]
-    public function validBill(BasketRepository $basketRepository): Response
+    public function validBill( EntityManagerInterface $em, ProductAccess $productAccess, BillAccess $billAccess): Response
     {
-        
+        $basket = $productAccess->findBasket($this->getUser());
+        if(!isset($basket)){
+            $this->addFlash(
+                'danger',
+                "Vous n'avez pas de panier"
+            );
+        } else {
+            if ($billAccess->createBill($basket)) {
+                $this->addFlash(
+                    'ok',
+                    "Votre commande a été validée. vous pouvez la visualiser dans votre compte"
+                );
+            } else {
+                $this->addFlash(
+                    'danger',
+                    "Votre panier est vide"
+                );
+            }
+        }
+        return $this->render('basket/index.html.twig', [
+            'basketProducts' => '',
+            'prixTotal' => 0
+        ]);
     }
 
 }

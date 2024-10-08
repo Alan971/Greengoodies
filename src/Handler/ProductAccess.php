@@ -8,6 +8,7 @@ use App\Entity\Basket;
 use App\Entity\BasketProduct;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Node\Expr\New_;
 
 class ProductAccess
 {
@@ -21,7 +22,25 @@ class ProductAccess
     }
 
     /**
-     * get all products of a user
+     * Find Available basket if exist
+     *
+     * @param User $user
+     * @return Basket|null
+     */
+    public function findBasket(User $user) : ?Basket
+    {
+        $baskets = $user->getInfoUser()->getBaskets();
+        foreach ($baskets as $basket) {
+            if (!$basket->getBill()) {
+                return $basket;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * add a product in basket 
+     * create basket if doesn't existe
      *
      * @param User $currentUser
      * @param Int $productId
@@ -34,20 +53,13 @@ class ProductAccess
             //s'il n'a pas encore de panier
             if (!$user->getInfoUser()->getBaskets()[0]) {
                 //on crée un nouveau panier
-                dump('ici');
                 $basket->setInfoUser($user->getInfoUser());
-                dump('là');
             } else {
                 //s'il a déjà un panier on cherche celui qui n'a pas de bill
-                $baskets = $user->getInfoUser()->getBaskets();
-                foreach ($baskets as $cart) {
-                    if (!$cart->getBill()) {
-                        $basket = $cart;
-                    }
-                    else {
-                        // s'il n'y en a pas, on crée un nouveau panier
-                        $basket->setInfoUser($user->getInfoUser());                       
-                    }
+                $basket = $this->findBasket($user);
+                if (!$basket) {
+                    $basket = new Basket;
+                    $basket->setInfoUser($user->getInfoUser());  
                 }
             }
             $basket->setDate(new \DateTime());

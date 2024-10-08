@@ -3,13 +3,17 @@
 {% block title %}Green Goodies : Nos produits{% endblock %}
 
 {% block body %}
-{#  messages flash #}
+    {#  messages flash #}
     {% for message in app.flashes('danger') %}
         <div class="flash-notice">
             {{ message }}
         </div>
     {% endfor %}
-    
+    {% for message in app.flashes('ok') %}
+        <div class="flash-notice-ok">
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="container">
         <div class="welcome-message">
             <div class="left-panel">

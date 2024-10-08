@@ -27,11 +27,11 @@ class MyAccountController extends AbstractController
                 $item->tag('useraccount');
                 $orders = [];
                 $orders = $billAccess->getBills($this->getUser());
-                $item->expiresAfter(1800); //le cache dure 1/2 heure.
+                $item->expiresAfter(60); //le cache dure 1 minute.
                 return $orders;
             }
             );
-
+            dump($orders);
             return $this->render('my_account/index.html.twig', [
                 'apiAccess' => $this->getUser()->isApiAccess(),
                 'orders' => $orders,
