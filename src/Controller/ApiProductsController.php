@@ -13,11 +13,12 @@ class ApiProductsController extends AbstractController
 {
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[Route('/api', name: 'app_api_products')]
-    public function index(ProductRepository $productRepository, SerializerInterface $serializer): JsonResponse
+    public function showProducts(ProductRepository $productRepository, SerializerInterface $serializer): JsonResponse
     {
         $products = $productRepository->findByEnable(true);
         $jsonproduts = $serializer->serialize($products, 'json', ['groups' => ['products']]);
 
         return new JsonResponse( $jsonproduts, 200,[], true);          
     }
+
 }

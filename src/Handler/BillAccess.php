@@ -26,6 +26,7 @@ class BillAccess
     {
         $infoUser = $currentUser->getInfoUser();
         $baskets = $this->em->getRepository(Basket::class)->findByUser($infoUser->getId());
+        $bills =[];
         foreach ($baskets as $basket) {
             $bills[] = $this->em->getRepository(Bill::class)->findByBasket($basket);
         }
