@@ -12,9 +12,8 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
     # ici commence l'ajout pour le listener
     app.event.jwt_created_listener:
-        class: App\EventListener\JWTCreatedListener
+        class: App\EventListener\JWTAuthenticationListener
         tags:
-            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccess }
     # ici finis le listener
     
