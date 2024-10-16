@@ -2,26 +2,21 @@ html body{
     font-family: Inter, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
+    width: 100%;
 }
 /* entête */
 header {
     background-color: #FFFDF7;
     width: 100%;
-    height: 81px;
+}
+header nav{
+    width: 100%;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.row1 {
-    margin: 0;
+nav a {
     padding-left: 100px;
-    padding-top: 30px;
-    width: 50%;
-}
-.row2 {
-    margin: 0;
-    padding-left: 100px;
-    padding-top: 15px;
-    color: rgb(100, 88, 88);
-    width: 50%;
 }
 
 ul.menu {
@@ -29,6 +24,7 @@ ul.menu {
     padding: 0;
     display: flex;
     font-size: 14px;
+    padding: 20px 100px;
 }
 ul.menu li a{
     padding: 1rem;
@@ -43,16 +39,17 @@ footer {
     width: 100%;
     height: 81px;
     display: flex;
-    justify-content: end;
+    justify-content: center;
     align-items: center;
+    /* padding: 20px 100px; */
 }
 footer p {
+    width: 80%;
     font-size: 14px;
     font-weight: 400;
     line-height: 16.94px;
     text-align: right;
     color: #333333;
-    padding-right: 100px;
 }
 /* page d'accueil */
 /* message flash */
@@ -66,6 +63,9 @@ footer p {
     width: 100%;
     background-color: #89d69d;
     color: #000000;
+}
+.container {
+    width: 100%;
 }
 /* panneau de bienvenue */
 .welcome-message {
@@ -85,6 +85,11 @@ footer p {
 .right-panel {
     width: 50%;
     height: 100%;
+}
+.right-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
 }
 .left-panel h1 {
     width: 55%;
@@ -300,7 +305,7 @@ footer p {
 .product-details a, .btn {
     margin-top: 40px;
 }
-/* Page d'enregistrement etde connection */
+/* Page d'enregistrement et de connection */
 .auth-container {
     width: 100%;
     display: flex;
@@ -384,7 +389,8 @@ footer p {
     align-items: center;
     justify-content: center;
     background-color: #F7F1EC;
-    padding: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 .container-my-account h1, .container-basket h1 {
     width: 30%;

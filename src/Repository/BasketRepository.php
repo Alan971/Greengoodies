@@ -7,7 +7,6 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
-
 /**
  * @extends ServiceEntityRepository<Basket>
  */
@@ -36,10 +35,15 @@ class BasketRepository extends ServiceEntityRepository
            ;
        }
 
+       /**
+        * suppression du panier en cours
+        *
+        * @param [type] $id
+        * @return void
+        */
        public function removeBasket($id): void
        {
-           $baskets = $this->findByUser($id);
-           dump ($baskets);
+           $baskets = $this->findByUser($id); 
            foreach ($baskets as $basket) {
                if (!$basket->getBill()) {
                    foreach($basket->getBasketProducts() as $basketProduct) {
@@ -50,6 +54,31 @@ class BasketRepository extends ServiceEntityRepository
            } 
            $this->em->flush();
        }
+       
+       /**
+        * suppression de tous les paniers/commande lors de la suppression du compte
+        *
+        * @param [type] $id
+        * @return void
+        */
+       public function removeAllBaskets($id): void
+       {
+           $baskets = $this->findByUser($id); 
+           foreach ($baskets as $basket) {
+                // suppression de la bdd basket-product 
+                foreach($basket->getBasketProducts() as $basketProduct) {
+                    $this->em->remove($basketProduct);
+                }
+                // suppression, si elles existent des commandes
+                if ($basket->getBill()) {
+                    $this->em->remove($basket->getBill());
+                }
+                //suppression du pannier
+                $this->em->remove($basket);
+           } 
+           $this->em->flush();
+       }
+
     //    /**
     //     * @return Basket[] Returns an array of Basket objects
     //     */

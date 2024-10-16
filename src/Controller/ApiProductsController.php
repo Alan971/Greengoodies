@@ -16,6 +16,16 @@ class ApiProductsController extends AbstractController
     public function showProducts(ProductRepository $productRepository, SerializerInterface $serializer): JsonResponse
     {
         $products = $productRepository->findByEnable(true);
+        //mise en forme du chemin complet des images
+        foreach ($products as $product) {
+            if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+                $url = "https://"; 
+            }
+            else {
+                $url = "http://"; 
+            }
+            $product->setPicture($url . $_SERVER['HTTP_HOST'] . $product->getPicture());
+        }
         $jsonproduts = $serializer->serialize($products, 'json', ['groups' => ['products']]);
 
         return new JsonResponse( $jsonproduts, 200,[], true);          

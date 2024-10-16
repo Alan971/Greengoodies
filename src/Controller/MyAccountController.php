@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Handler\BillAccess;
+use App\Repository\BasketRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,27 +11,23 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Contracts\Cache\TagAwareCacheInterface;
-use Symfony\Contracts\Cache\ItemInterface;
+
 
 class MyAccountController extends AbstractController
 {
+    /**
+     * Affichage de la page de compte
+     *
+     * @param BillAccess $billAccess
+     * @return Response
+     */
     #[Route('/myaccount', name: 'app_my_account')]
-    public function index(BillAccess $billAccess,TagAwareCacheInterface $cachePool ): Response
+    public function index(BillAccess $billAccess): Response
     {
         if ($this->getUser()) {
-            // récupération des commandes de l'utilisateur si elle n'est pas dans le cache
-            $stringId = $this->getUser()->getId()->__toString();
-            $idCache = "user_" . $stringId;
-            $orders = $cachePool->get($idCache, function(ItemInterface $item) use ($billAccess)
-            {
-                $item->tag('useraccount');
-                $orders = $billAccess->getBills($this->getUser());
-                $item->expiresAfter(60); //le cache dure 1 minute.
-                return $orders;
-            }
-            );
-            dump($orders);
+
+            $orders = $billAccess->getBills($this->getUser());
+
             return $this->render('my_account/index.html.twig', [
                 'apiAccess' => $this->getUser()->isApiAccess(),
                 'orders' => $orders,
@@ -39,11 +36,16 @@ class MyAccountController extends AbstractController
         return $this->redirectToRoute('app_login');
     }
 
-
+    /**
+     * Activation ou désactivation de l'accès API
+     *
+     * @param EntityManagerInterface $entityManager
+     * @param BillAccess $billAccess
+     * @return Response
+     */
     #[Route('/myaccount/api', name: 'app_my_account_api')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function api(EntityManagerInterface $entityManager, BillAccess $billAccess, 
-                        TagAwareCacheInterface $cachePool): Response
+    public function api(EntityManagerInterface $entityManager, BillAccess $billAccess ): Response
     {
         // modification de l'état de l'api utilisateur
         $user = $this->getUser();
@@ -55,18 +57,8 @@ class MyAccountController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        // récupération des commandes de l'utilisateur si elle n'est pas dans le cache
-        $stringId = $this->getUser()->getId()->__toString();
-        $idCache = "user_" . $stringId;
-        $orders = $cachePool->get($idCache, function(ItemInterface $item) use ($billAccess)
-        {
-            $item->tag('useraccount');
-            $orders = [];
-            $orders = $billAccess->getBills($this->getUser());
-            $item->expiresAfter(1800); //le cache dure 1/2 heure.
-            return $orders;
-        }
-        );
+        $orders = [];
+        $orders = $billAccess->getBills($this->getUser());
 
         return $this->render('my_account/index.html.twig', [
             'apiAccess' => $this->getUser()->isApiAccess(),
@@ -74,16 +66,26 @@ class MyAccountController extends AbstractController
         ]);
     }
 
+    /**
+     * suppression de compte
+     *
+     * @param UserRepository $userRepository
+     * @param Request $request
+     * @param BillAccess $billAccess
+     * @return Response
+     */
     #[Route('/myaccount/delete', name: 'app_my_account_delete')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function delete(UserRepository $userRepository, Request $request, BillAccess $billAccess): Response
+    public function delete(UserRepository $userRepository, BasketRepository $basketRepository, Request $request, BillAccess $billAccess): Response
     {
         //suppresion de l'utilisateur en bdd
         $user = $this->getUser();
+        $infoUser = $user->getInfoUser();
+        $basketRepository->removeAllBaskets($infoUser->getId());
         $userRepository->deleteUser($user);
         // suppression des commandes de l'utilisateur
         // TO DO controler le bon fonctionnement de la suppression des commandes
-        $billAccess->deleteBills($user);
+ 
         //TO DO suppression des baskets de l'utilisateur
         
         //suppression de la session, obligatoire avant de rediriger vers une page 
