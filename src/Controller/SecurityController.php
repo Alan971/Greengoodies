@@ -10,7 +10,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
-     * Connection
+     * Connexion
      *
      * @param AuthenticationUtils $authenticationUtils
      * @return Response

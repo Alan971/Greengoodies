@@ -15,7 +15,12 @@ class JWTAuthenticationListener
     {
         $this->em = $em;
     }
-
+    /**
+     * Control of access to API in case of AuthenticationSuccessEvent
+     *
+     * @param AuthenticationSuccessEvent $event
+     * @return void
+     */
     public function onAuthenticationSuccess(AuthenticationSuccessEvent $event)
     {
         $user = $event->getUser();

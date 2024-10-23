@@ -12,21 +12,26 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-
+#[Route('/myaccount', name: 'app_my_')]
 class MyAccountController extends AbstractController
 {
+
+    public function __construct(private BillAccess $billAccess)
+    {
+        
+    }
     /**
-     * Affichage de la page de compte
+     * Show page account
      *
      * @param BillAccess $billAccess
      * @return Response
      */
-    #[Route('/myaccount', name: 'app_my_account')]
-    public function index(BillAccess $billAccess): Response
+    #[Route('/', name: 'account')]
+    public function index(): Response
     {
         if ($this->getUser()) {
 
-            $orders = $billAccess->getBills($this->getUser());
+            $orders = $this->billAccess->getBills($this->getUser());
 
             return $this->render('my_account/index.html.twig', [
                 'apiAccess' => $this->getUser()->isApiAccess(),
@@ -37,15 +42,14 @@ class MyAccountController extends AbstractController
     }
 
     /**
-     * Activation ou désactivation de l'accès API
+     * Activation or désactivation of API Access
      *
      * @param EntityManagerInterface $entityManager
      * @param BillAccess $billAccess
      * @return Response
      */
-    #[Route('/myaccount/api', name: 'app_my_account_api')]
-    #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function api(EntityManagerInterface $entityManager, BillAccess $billAccess ): Response
+    #[Route('/api', name: 'account_api')]
+    public function api(EntityManagerInterface $entityManager ): Response
     {
         // modification de l'état de l'api utilisateur
         $user = $this->getUser();
@@ -58,7 +62,7 @@ class MyAccountController extends AbstractController
         $entityManager->flush();
 
         $orders = [];
-        $orders = $billAccess->getBills($this->getUser());
+        $orders = $this->billAccess->getBills($this->getUser());
 
         return $this->render('my_account/index.html.twig', [
             'apiAccess' => $this->getUser()->isApiAccess(),
@@ -67,16 +71,15 @@ class MyAccountController extends AbstractController
     }
 
     /**
-     * suppression de compte
+     * Delete account
      *
      * @param UserRepository $userRepository
      * @param Request $request
      * @param BillAccess $billAccess
      * @return Response
      */
-    #[Route('/myaccount/delete', name: 'app_my_account_delete')]
-    #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function delete(UserRepository $userRepository, BasketRepository $basketRepository, Request $request, BillAccess $billAccess): Response
+    #[Route('/delete', name: 'account_delete')]
+    public function delete(UserRepository $userRepository, BasketRepository $basketRepository, Request $request): Response
     {
         //suppresion de l'utilisateur en bdd
         $user = $this->getUser();

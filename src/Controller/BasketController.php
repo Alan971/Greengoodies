@@ -14,7 +14,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class BasketController extends AbstractController
 {
     /**
-     *  ajoute un produit au panier
+     *  add one product to basket
      *
      * @param ProductAccess $productAccess
      * @param string $productId
@@ -63,7 +63,7 @@ class BasketController extends AbstractController
     }
 
     /**
-     *  affiche le panier de l'utilisateur
+     *  show user basket
      * 
      * @param BasketRepository $basketRepository
      * @return Response

@@ -11,6 +11,12 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class HttpExceptionSubscriber implements EventSubscriberInterface
 {
+    /**
+     * Json message in case of exception
+     *
+     * @param ExceptionEvent $event
+     * @return void
+     */
     public function onKernelException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
